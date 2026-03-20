@@ -5,11 +5,15 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-vibe: var(--vibe-particle);
+  --color-vibe-accent: var(--vibe-accent);
+  --color-vibe-accent-2: var(--vibe-accent-2);
+  --color-vibe-glow: var(--vibe-glow);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, monospace;
+  --font-heading: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,6 +53,12 @@
 }
 
 :root {
+  --vibe-accent: oklch(0.72 0.16 310);
+  --vibe-accent-2: oklch(0.78 0.12 330);
+  --vibe-glow: oklch(0.62 0.2 300);
+  --vibe-surface: oklch(0.24 0.06 300 / 0.5);
+  --vibe-grid: oklch(0.55 0.12 300 / 0.1);
+  --vibe-particle: oklch(0.78 0.14 320);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -84,8 +94,8 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  --background: oklch(0.11 0.03 270);
+  --foreground: oklch(0.96 0.01 270);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -127,4 +137,95 @@
   html {
     @apply font-sans;
   }
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Frosted glass: strong blur, dual highlights, depth */
+.glass-panel,
+.glass-surface {
+  position: relative;
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(
+      155deg,
+      oklch(1 0 0 / 0.14) 0%,
+      oklch(1 0 0 / 0.04) 42%,
+      oklch(0 0 0 / 0.12) 100%
+    ),
+    color-mix(in oklch, var(--vibe-surface) 65%, oklch(0.12 0.04 280 / 0.5));
+  border: 1px solid oklch(1 0 0 / 0.22);
+  box-shadow:
+    0 1px 0 0 oklch(1 0 0 / 0.16) inset,
+    0 -1px 0 0 oklch(0 0 0 / 0.28) inset,
+    0 0 0 1px color-mix(in oklch, var(--vibe-accent) 18%, transparent),
+    0 12px 40px -8px oklch(0 0 0 / 0.55),
+    0 0 80px -20px color-mix(in oklch, var(--vibe-glow) 35%, transparent);
+  backdrop-filter: blur(28px) saturate(1.65);
+  -webkit-backdrop-filter: blur(28px) saturate(1.65);
+}
+
+.glass-panel::before,
+.glass-surface::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    125deg,
+    oklch(1 0 0 / 0.1) 0%,
+    transparent 45%,
+    oklch(1 0 0 / 0.03) 100%
+  );
+  opacity: 0.85;
+  z-index: 0;
+}
+
+.glass-panel > *,
+.glass-surface > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Inset frosted well inside glass cards */
+.glass-inset {
+  border-radius: var(--radius-lg);
+  background: oklch(0 0 0 / 0.22);
+  border: 1px solid oklch(1 0 0 / 0.06);
+  box-shadow: 0 1px 0 0 oklch(1 0 0 / 0.05) inset;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.cyber-root {
+  background: radial-gradient(
+      120% 80% at 50% -10%,
+      color-mix(in oklch, var(--vibe-glow) 18%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      90% 60% at 100% 50%,
+      color-mix(in oklch, var(--vibe-accent-2) 12%, transparent),
+      transparent 50%
+    ),
+    var(--background);
+}
+
+.cyber-grid {
+  background-image:
+    linear-gradient(color-mix(in oklch, var(--vibe-grid) 100%, transparent) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      color-mix(in oklch, var(--vibe-grid) 100%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black 20%, transparent 75%);
+}
+
+.cyber-vignette {
+  background: radial-gradient(ellipse 85% 65% at 50% 50%, transparent 40%, oklch(0.05 0.03 280 / 0.75));
+  pointer-events: none;
 }

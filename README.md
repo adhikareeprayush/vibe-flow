@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vibe Flow
 
-## Getting Started
+A minimal, focused ambient workspace that lives in your browser. Pick a mood, let the music play, and get into flow — everything else stays out of the way.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8?logo=tailwindcss) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript)
+
+---
+
+## Features
+
+**Four moods** — each with its own colour palette, particle field, and default YouTube stream:
+
+| Mood | Vibe |
+|------|------|
+| Lofi | Tape warmth & rain |
+| Chill | Soft drift, ocean calm |
+| Focus | Deep work grid |
+| Hype | Neon pulse energy |
+
+**Widgets** — all individually toggleable from the settings dock:
+
+- **Player** — streams the mood's YouTube playlist by default; swap in any YouTube URL, video ID, or playlist link per mood, or upload a local audio file
+- **Pomodoro timer** — configurable duration (1–120 min), syncs the player (pauses during breaks, resumes on focus sessions)
+- **Search bar** — quick search with Google, Bing, or DuckDuckGo; opens results in a new tab (mutually exclusive with the timer)
+- **Analog clock** — minimal, no box
+- **Weather** — current conditions + temperature via [Open-Meteo](https://open-meteo.com/); location resolved server-side from your IP, with a manual coordinate fallback in settings
+- **Quote** — random inspirational quote from [ZenQuotes](https://zenquotes.io/), refreshable on demand
+- **Particle field** — ambient background particles tuned to each mood
+
+**Customisation**
+
+- Per-mood custom YouTube streams
+- Adjustable Pomodoro duration
+- Manual lat/lon fallback for weather when IP geolocation isn't available
+- One-click theme CSS export (downloads the current mood's CSS variables)
+
+All preferences are persisted in `localStorage` — no account, no backend.
+
+---
+
+## Getting started
 
 ```bash
+git clone https://github.com/your-username/vibe-flow.git
+cd vibe-flow
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+For a production build:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Tech stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js 16](https://nextjs.org/) (App Router, server-side API routes)
+- [React 19](https://react.dev/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Lucide React](https://lucide.dev/)
+- [canvas-confetti](https://github.com/catdad/canvas-confetti)
+- [Open-Meteo API](https://open-meteo.com/) — weather (no API key required)
+- [ZenQuotes API](https://zenquotes.io/) — quotes (no API key required)
+- [YouTube IFrame API](https://developers.google.com/youtube/iframe_api_reference) — ambient streams
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **YouTube autoplay** — browsers may block autoplay with sound on first load. If the player shows a pulse icon, click it once to unlock audio.
+- **Weather** — location is detected server-side from your IP via [ipwho.is](https://ipwho.is/). If that fails, set a manual latitude/longitude in the settings dock.
+- **Custom streams** — paste any YouTube watch URL, short URL (`youtu.be/…`), playlist URL, or bare video/playlist ID into the Streams section of settings.
+- **Pomodoro + Search** — these two widgets are mutually exclusive; enabling one automatically disables the other.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Contributing
+
+Contributions are welcome! Here's how to get involved:
+
+1. **Fork** the repository and create a branch from `main` — name it something descriptive like `feat/new-widget` or `fix/seek-bar`.
+2. **Make your changes.** Keep commits focused — one logical change per commit.
+3. **Test locally** with `npm run dev` and verify a clean `npm run build` before opening a PR.
+4. **Open a pull request** against `main` with a clear description of what changed and why.
+
+A few guidelines to keep things consistent:
+
+- Match the existing code style — Tailwind utilities, `cn()` for conditional classes, `useCallback` for event handlers passed as props.
+- New widgets should be toggleable via the settings dock and persist their state through `useVibePreferences`.
+- Avoid adding new dependencies unless genuinely necessary; prefer what's already in the stack.
+
+For bugs or feature ideas, open an issue first so we can discuss before you spend time on a PR.
+
+**Author:** [adhikareeprayush](https://github.com/adhikareeprayush)
