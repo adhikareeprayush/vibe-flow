@@ -1,5 +1,11 @@
 # Vibe Flow
 
+
+<img width="1916" height="1073" alt="image" src="https://github.com/user-attachments/assets/07790607-75a6-4e30-abf2-a689f4bef777" />
+
+
+
+
 A minimal, focused ambient workspace that lives in your browser. Pick a mood, let the music play, and get into flow — everything else stays out of the way.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8?logo=tailwindcss) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript)
